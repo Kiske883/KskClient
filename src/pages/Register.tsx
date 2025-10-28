@@ -7,15 +7,22 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import UsersService from "../services/UsersService";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
-    const response = await new UsersService().register(data);
-    console.log(response) ;
+    try {
+      const response = await new UsersService().register(data);
+      console.log(response);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
-    
+
   return (
     <div>
       <h2>Register</h2>
@@ -29,7 +36,7 @@ const Register = () => {
               placeholder="name"
               fullWidth
               size="small"
-              {...register('name')}
+              {...register("name")}
             ></TextField>
           </FormControl>
           <FormControl sx={{ marginBottom: "10px" }}>
@@ -40,7 +47,7 @@ const Register = () => {
               placeholder="email"
               fullWidth
               size="small"
-              {...register('email')}
+              {...register("email")}
             ></TextField>
           </FormControl>
           <FormControl sx={{ marginBottom: "10px" }}>
@@ -51,7 +58,7 @@ const Register = () => {
               placeholder="password"
               fullWidth
               size="small"
-              {...register('password')}
+              {...register("password")}
             ></TextField>
           </FormControl>
         </Stack>
